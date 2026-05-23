@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ RAVID | האתר הרשמי עם מערכת עריכה</title>
+    <!-- פונטים וסמלים מקצועיים -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* עיצוב ואסתטיקה כללית */
+        :root {
+            --bg-dark: #07090e;
+            --bg-card: rgba(18, 22, 35, 0.7);
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #f35588;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Varela Round', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* כותרות מעוצבות */
+        h1, h2, h3, .logo {
+            font-family: 'Secular One', sans-serif;
+            font-weight: normal;
+        }
+
+        /* תפריט ניווט עליון - אפקט זכוכית */
+        header {
+            background-color: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            text-decoration: none;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* סקשנים */
+        section {
+            padding: 100px 20px 80px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(to left, var(--text-main), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        /* דף הבית (Hero Section) */
+        #home {
+            background: radial-gradient(circle at center, rgba(18, 22, 35, 0.4) 0%, var(--bg-dark) 80%), 
+                        url('http://googleusercontent.com/image_collection/image_retrieval/7629157193167781207_0') no-repeat center center/cover;
+            background-attachment: fixed;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-tagline {
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #home h1 {
+            font-size: 4.5rem;
+            margin: 10px 0 25px 0;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+        }
+
+        #home p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #000;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5);
+        }
+
+        /* אודות (About Section) */
+        #about {
+            background-color: var(--bg-dark);
+        }
+
+        .about-container {
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: right;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+        }
+
+        /* סטים ומדיה */
+        #media {
+            background-color: #0b0e14;
+        }
+
+        .media-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .media-icon {
+            font-size: 3.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .media-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .media-card p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        /* גלריית תמונות */
+        #gallery {
+            background-color: var(--bg-dark);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            group: hover;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* משפחת סולן */
+        #solan {
+            background: linear-gradient(rgba(7, 9, 14, 0.9), rgba(7, 9, 14, 0.95)), 
+                        url('http://googleusercontent.com/image_collection/image_retrieval/7629157193167781207_1') no-repeat center center/cover;
+            background-attachment: fixed;
+            text-align: center;
+        }
+
+        .solan-badge {
+            font-size: 4rem;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .solan-content {
+            max-width: 800px;
+            background: rgba(18, 22, 35, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 242, 254, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .solan-content h2 {
+            font-size: 2.8rem;
+            margin-top: 0;
+            color: var(--text-main);
+        }
+
+        .solan-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+
+        /* יצירת קשר */
+        #contact {
+            background-color: var(--bg-dark);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            text-align: center;
+        }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.3rem;
+            background: rgba(255,255,255,0.03);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(0, 242, 254, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .contact-item i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .contact-item a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
+        footer {
+            background-color: #040508;
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* סרגל עריכה קבוע (Admin Controller) */
+        #admin-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            padding: 10px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.2);
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            direction: rtl;
+        }
+
+        .admin-title {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Varela Round', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .admin-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: #fff;
+        }
+
+        .admin-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(243, 85, 136, 0.4);
+        }
+
+        .admin-btn-save {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+
+        .admin-btn-save:hover {
+            background: #fff;
+            border-color: #fff;
+            color: #000;
+        }
+
+        /* מחלקה שמתווספת לאלמנטים עריכים במצב עריכה פעיל */
+        .edit-mode-active [data-editable] {
+            border: 1px dashed var(--primary) !important;
+            padding: 2px 5px;
+            border-radius: 4px;
+            cursor: text;
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        /* כפתורי החלפת תמונה */
+        .image-edit-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(7, 9, 14, 0.8);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: none;
+            z-index: 10;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .image-edit-overlay:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .edit-mode-active .image-edit-overlay {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- תפריט ניווט -->
+    <header>
+        <div class="nav-container">
+            <a href="#home" class="logo" data-editable id="nav-logo">DJ RAVID</a>
+            <nav id="main-nav">
+                <a href="#home" class="active" data-editable>דף הבית</a>
+                <a href="#about" data-editable>אודות</a>
+                <a href="#media" data-editable>סטים ומדיה</a>
+                <a href="#gallery" data-editable>גלריה</a>
+                <a href="#solan" data-editable>משפחת סולן</a>
+                <a href="#contact" data-editable>יצירת קשר</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- דף הבית -->
+    <section id="home">
+        <div class="image-edit-overlay" onclick="changeHeroBg()"><i class="fa-solid fa-image"></i> החלף תמונת רקע</div>
+        <div class="hero-content">
+            <div class="hero-tagline" data-editable id="hero-tag">THE SOUND OF THE NIGHT</div>
+            <h1 data-editable id="hero-title">DJ RAVID</h1>
+            <p data-editable id="hero-desc">הסאונד שמניע את הרחבה. האנרגיה שמרימה את הלילה. חוויה מוזיקלית אלקטרונית מטורפת ובלתי מתפשרת.</p>
+            <a href="#media" class="btn-primary" data-editable id="hero-btn-text">האזינו לסט החדש 2026</a>
+        </div>
+    </section>
+
+    <!-- אודות -->
+    <section id="about">
+        <h2 class="section-title" data-editable id="about-title">אודותיי</h2>
+        <div class="section-desc" data-editable id="about-subtitle">הסיפור מאחורי המוזיקה והקצב</div>
+        
+        <div class="about-container">
+            <div class="about-text">
+                <h3 data-editable id="about-h3">מי אני?</h3>
+                <p data-editable id="about-p1">דיג'יי ומפיק מוזיקה אלקטרונית שחי ונושם את הרחבות והמועדונים. עם מיקסים חדים, בחירת סאונד קפדנית, וטכנולוגיית סאונד מתקדמת, המטרה היא תמיד להביא את הקהל לשיא הרגש והאנרגיה.</p>
+                <p data-editable id="about-p2">בין אם מדובר במוזיקת מועדונים בועטת, סטים מלודיים סוחפים או הפקות מקוריות, כל דקה על העמדה מתוכננת בדיוק מקסימלי כדי לייצר חוויה ייחודית שתישאר אתכם הרבה אחרי שהאורות יידלקו.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- סטים ומדיה -->
+    <section id="media">
+        <h2 class="section-title" data-editable id="media-title">סטים ומדיה</h2>
+        <div class="section-desc" data-editable id="media-subtitle">המוזיקה והאנרגיה זמינות להאזנה בכל זמן</div>
+        
+        <div class="media-card">
+            <div class="media-icon"><i class="fa-solid fa-compact-disc"></i></div>
+            <h3 data-editable id="set-title">New Summer Set 2026</h3>
+            <p data-editable id="set-desc">סט הקיץ הרשמי הגיע! שעה שלמה של מוזיקה אלקטרונית מרימה, קצב חם ואווירה של מסיבה שלא נגמרת. זמין עכשיו להאזנה ישירה ביוטיוב ובכל ערוצי המוזיקה.</p>
+            <a href="https://youtube.com" target="_blank" class="btn-primary" data-editable id="set-btn">לחצו להאזנה ב-YouTube</a>
+        </div>
+    </section>
+
+    <!-- גלריית תמונות -->
+    <section id="gallery">
+        <h2 class="section-title" data-editable id="gallery-title">גלריית תמונות</h2>
+        <div class="section-desc" data-editable id="gallery-subtitle">צילומים מהרגעים הגדולים על הרחבה, האולפן והאירועים</div>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="image-edit-overlay" onclick="changeGalleryImage(this)"><i class="fa-solid fa-pen"></i> ערוך תמונה</div>
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/7629157193167781207_1" id="gal-img-1" alt="DJ Controller">
+            </div>
+            <div class="gallery-item">
+                <div class="image-edit-overlay" onclick="changeGalleryImage(this)"><i class="fa-solid fa-pen"></i> ערוך תמונה</div>
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/7629157193167781207_2" id="gal-img-2" alt="Club Lights">
+            </div>
+            <div class="gallery-item">
+                <div class="image-edit-overlay" onclick="changeGalleryImage(this)"><i class="fa-solid fa-pen"></i> ערוך תמונה</div>
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/7629157193167781207_3" id="gal-img-3" alt="Crowd">
+            </div>
+            <div class="gallery-item">
+                <div class="image-edit-overlay" onclick="changeGalleryImage(this)"><i class="fa-solid fa-pen"></i> ערוך תמונה</div>
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/7629157193167781207_4" id="gal-img-4" alt="Festival">
+            </div>
+        </div>
+    </section>
+
+    <!-- משפחת סולן -->
+    <section id="solan">
+        <div class="image-edit-overlay" onclick="changeSolanBg()"><i class="fa-solid fa-image"></i> החלף תמונת רקע</div>
+        <div class="solan-badge">
+            <i class="fa-solid fa-crown"></i>
+        </div>
+        <div class="solan-content">
+            <h2 data-editable id="solan-title">משפחת סולן - האימפריה</h2>
+            <p data-editable id="solan-p">המוזיקה היא אומנם הלב והתשוקה, אבל המשפחה והקרובים אלינו הם המנוע והדלק לכל הטירוף הזה. "משפחת סולן" (האימפריה) מלווה את הדרך, נותנת את הגב ואת הכוח לעשות את מה שאנחנו הכי אוהבים בכל פעם מחדש.</p>
+        </div>
+    </section>
+
+    <!-- יצירת קשר -->
+    <section id="contact">
+        <h2 class="section-title" data-editable id="contact-title">יצירת קשר</h2>
+        <div class="section-desc" data-editable id="contact-subtitle">בואו נדבר ונבנה את האירוע הבא שלכם</div>
+        
+        <div class="contact-container">
+            <h3 data-editable id="contact-h3">זמינות לבוקינג, הופעות ושת"פ מוזיקלי</h3>
+            <div class="contact-info-list">
+                <div class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span data-editable id="contact-email"><a href="mailto:ravidsolan123@gmail.com">ravidsolan123@gmail.com</a></span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span data-editable id="contact-phone"><a href="tel:050-000-0000">050-000-0000</a></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- כותרת תחתונה -->
+    <footer>
+        <p>&copy; 2026 <span data-editable id="footer-brand">DJ RAVID</span>. כל הזכויות שמורות. מעוצב ומותאם אישית עבורך.</p>
+    </footer>
+
+    <!-- סרגל העריכה המובנה (Admin Controller) -->
+    <div id="admin-panel">
+        <div class="admin-title">
+            <i class="fa-solid fa-sliders"></i>
+            <span>מערכת עריכה</span>
+        </div>
+        <button class="admin-btn" id="btn-toggle-edit" onclick="toggleEditMode()">
+            <i class="fa-solid fa-pencil"></i>
+            <span id="edit-text">הפעל מצב עריכה</span>
+        </button>
+        <button class="admin-btn" onclick="saveToLocalStorage()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>שמור בדפדפן</span>
+        </button>
+        <button class="admin-btn admin-btn-save" onclick="exportHTML()">
+            <i class="fa-solid fa-download"></i>
+            <span>הורד קובץ מעודכן HTML</span>
+        </button>
+    </div>
+
+    <!-- לוגיקה חכמה של מערכת הניהול בקוד JS -->
+    <script>
+        let isEditMode = false;
+
+        // טעינת תכנים שמורים מהדפדפן ברגע שהדף עולה
+        window.onload = function() {
+            loadSavedContent();
+            setupScrollSpy();
+        };
+
+        // הפעלה וכיבוי של מצב עריכה ויזואלי
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const body = document.body;
+            const btn = document.getElementById('btn-toggle-edit');
+            const editText = document.getElementById('edit-text');
+
+            if (isEditMode) {
+                body.classList.add('edit-mode-active');
+                btn.classList.add('active');
+                editText.innerText = "כבה מצב עריכה";
+                
+                // הפיכת כל אלמנטי הטקסט לעריכים
+                document.querySelectorAll('[data-editable]').forEach(el => {
+                    el.contentEditable = "true";
+                });
+                
+                alert("מצב עריכה הופעל! כעת ניתן ללחוץ על כל טקסט ולשנות אותו, וכן להשתמש בכפתורי 'ערוך תמונה' שעל גבי התמונות.");
+            } else {
+                body.classList.remove('edit-mode-active');
+                btn.classList.remove('active');
+                editText.innerText = "הפעל מצב עריכה";
+                
+                // ביטול עריכת טקסטים
+                document.querySelectorAll('[data-editable]').forEach(el => {
+                    el.contentEditable = "false";
+                });
+            }
+        }
+
+        // שינוי תמונת רקע של אזור ה-Hero
+        function changeHeroBg() {
+            const currentUrl = document.getElementById('home').style.backgroundImage;
+            const cleanUrl = currentUrl.replace('url("', '').replace('")', '').replace('url(', '').replace(')', '');
+            const newUrl = prompt("הכנס קישור אינטרנט לתמונת הרקע החדשה שלך:", cleanUrl);
+            if (newUrl) {
+                document.getElementById('home').style.backgroundImage = `radial-gradient(circle at center, rgba(18, 22, 35, 0.4) 0%, var(--bg-dark) 80%), url('${newUrl}')`;
+            }
+        }
+
+        // שינוי תמונת רקע של אזור משפחת סולן
+        function changeSolanBg() {
+            const currentUrl = document.getElementById('solan').style.backgroundImage;
+            const cleanUrl = currentUrl.replace('url("', '').replace('")', '').replace('url(', '').replace(')', '');
+            const newUrl = prompt("הכנס קישור אינטרנט לתמונת הרקע החדשה של משפחת סולן:", cleanUrl);
+            if (newUrl) {
+                document.getElementById('solan').style.backgroundImage = `linear-gradient(rgba(7, 9, 14, 0.9), rgba(7, 9, 14, 0.95)), url('${newUrl}')`;
+            }
+        }
+
+        // שינוי תמונה ספציפית בגלריה
+        function changeGalleryImage(buttonEl) {
+            const img = buttonEl.nextElementSibling;
+            const newUrl = prompt("הכנס קישור לתמונה החדשה שלך (למשל קישור מפייסבוק, אינסטגרם או Imgur):", img.src);
+            if (newUrl) {
+                img.src = newUrl;
+            }
+        }
+
+        // שמירת המצב הנוכחי ל-LocalStorage של הדפדפן
+        function saveToLocalStorage() {
+            const editableElements = {};
+            document.querySelectorAll('[data-editable]').forEach(el => {
+                editableElements[el.id || el.innerText.substring(0, 10)] = el.innerHTML;
+            });
+
+            // שמירת קישורי תמונות
+            const galleryImages = [];
+            document.querySelectorAll('.gallery-grid img').forEach(img => {
+                galleryImages.push({ id: img.id, src: img.src });
+            });
+
+            const bgImages = {
+                hero: document.getElementById('home').style.backgroundImage,
+                solan: document.getElementById('solan').style.backgroundImage
+            };
+
+            const dataToSave = {
+                texts: editableElements,
+                gallery: galleryImages,
+                bgs: bgImages
+            };
+
+            localStorage.setItem('dj_ravid_v2_data', JSON.stringify(dataToSave));
+            alert("כל השינויים נשמרו בהצלחה בדפדפן הנוכחי שלך!");
+        }
+
+        // טעינת התכנים השמורים
+        function loadSavedContent() {
+            const savedData = localStorage.getItem('dj_ravid_v2_data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // שחזור טקסטים
+                document.querySelectorAll('[data-editable]').forEach(el => {
+                    const key = el.id || el.innerText.substring(0, 10);
+                    if (data.texts && data.texts[key]) {
+                        el.innerHTML = data.texts[key];
+                    }
+                });
+
+                // שחזור תמונות גלריה
+                if (data.gallery) {
+                    data.gallery.forEach(savedImg => {
+                        const imgEl = document.getElementById(savedImg.id);
+                        if (imgEl) imgEl.src = savedImg.src;
+                    });
+                }
+
+                // שחזור רקעים
+                if (data.bgs) {
+                    if (data.bgs.hero) document.getElementById('home').style.backgroundImage = data.bgs.hero;
+                    if (data.bgs.solan) document.getElementById('solan').style.backgroundImage = data.bgs.solan;
+                }
+            }
+        }
+
+        // יצירת קובץ HTML חדש ומעודכן מוכן להורדה (ללא זכרונות לוקאליים - הכל מקודד בפנים!)
+        function exportHTML() {
+            // כיבוי זמני של מצב העריכה כדי לנקות את הקוד לפני ייצוא
+            if (isEditMode) toggleEditMode();
+
+            // שכפול של כל המסמך
+            const docClone = document.documentElement.cloneNode(true);
+            
+            // הסרת פאנל הניהול מהקובץ הסופי כך שמי שיבקר באתר לא יראה אותו (או שתרצה להשאיר? הוסר לטובת מראה נקי לקהל)
+            const adminPanelInClone = docClone.querySelector('#admin-panel');
+            if (adminPanelInClone) adminPanelInClone.remove();
+
+            // ניקוי תגיות עריכה זמניות
+            docClone.querySelectorAll('[data-editable]').forEach(el => {
+                el.removeAttribute('contenteditable');
+                el.removeAttribute('style'); // מסיר את הגדרות העיצוב הזמניות של מסגרת העריכה
+            });
+
+            // הסרת כפתורי עריכת תמונות
+            docClone.querySelectorAll('.image-edit-overlay').forEach(el => el.remove());
+
+            const finalHtml = "<!DOCTYPE html>\n" + docClone.outerHTML;
+
+            // יצירת קובץ להורדה
+            const blob = new Blob([finalHtml], { type: 'text/html;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", "index.html");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // ניווט פעיל בזמן גלילה (Scroll Spy)
+        function setupScrollSpy() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
